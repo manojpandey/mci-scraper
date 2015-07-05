@@ -5,6 +5,7 @@ from selenium.webdriver.support.ui import Select
 from selenium.webdriver.common.keys import Keys
 import time
 import json
+import sys
 
 def main():
 
@@ -63,9 +64,11 @@ def main():
 		Clicking the view button for particular ID and open the pop up window
 	"""
 
+	sys.stdout = open("extra.json", "a")
+
 	data = []
 
-	for loop in range (0,330):
+	for loop in range (0,10):
 		for i in range (3,33):
 			# Create empty dictionary
 			doctors = {}
@@ -78,21 +81,24 @@ def main():
 			
 			# Switch to pop up window
 			view_button.click()
+			
+			time.sleep(0.5)
+			
 			handles = driver.window_handles
 			handles.remove(parent_h)
 			driver.switch_to_window(handles.pop())
 			
 			# Get the data
 			s_no = (loop*30) + i - 2
-			name = driver.find_element_by_xpath('/html/body/form/div[3]/table/tbody/tr[3]/td[2]/span')
-			father_husband = driver.find_element_by_xpath('/html/body/form/div[3]/table/tbody/tr[4]/td[2]/span')
-			year_of_info = driver.find_element_by_xpath('/html/body/form/div[3]/table/tbody/tr[5]/td[4]/span')
-			registration_no = driver.find_element_by_xpath('/html/body/form/div[3]/table/tbody/tr[6]/td[2]/span')
-			registration_date = driver.find_element_by_xpath('/html/body/form/div[3]/table/tbody/tr[6]/td[4]/span')
-			qualification = driver.find_element_by_xpath('/html/body/form/div[3]/table/tbody/tr[8]/td[2]/span')
-			qualification_year = driver.find_element_by_xpath('/html/body/form/div[3]/table/tbody/tr[8]/td[4]/span')
-			university = driver.find_element_by_xpath('/html/body/form/div[3]/table/tbody/tr[9]/td[2]/span')
-			permanent_address = driver.find_element_by_xpath('/html/body/form/div[3]/table/tbody/tr[13]/td[2]/span')
+			name = driver.find_element_by_id("Name")
+			father_husband = driver.find_element_by_id("FatherName")
+			year_of_info = driver.find_element_by_id("lbl_Info")
+			registration_no = driver.find_element_by_id("Regis_no")
+			registration_date = driver.find_element_by_id("Date_Reg")
+			qualification = driver.find_element_by_id("Qual")
+			qualification_year = driver.find_element_by_id("QualYear")
+			university = driver.find_element_by_id("Univ")
+			permanent_address = driver.find_element_by_id("Address")
 
 			# Save the data
 			doctors["s_no"] = s_no
@@ -124,11 +130,14 @@ def main():
 		else:
 			next_button = driver.find_element_by_xpath('/html/body/form/div[3]/div/div/div[5]/div/div/div[1]/div/table/tbody/tr/td[2]/div/div/table[2]/tbody/tr[2]/td/div/table/tbody/tr[33]/td/table/tbody/tr/td[3]/a')			
 		next_button.click()
-		time.sleep(0.5)
+		
+		time.sleep(2)
 	# =========================================================================
 
 	myfile = open("data.json", "w")
 	myfile.write(json.dumps(data))
+
+	sys.stdout.close()
 
 	# Getting the page source and Parsing it
 

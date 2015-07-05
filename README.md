@@ -18,6 +18,7 @@ utility scraper using selenium and bs4 in python
 	- Example:
 
 	{
+		
 		"name": "tarun suri",
 		"university": "U.Punjabi",
 		"registration_date": "02/08/2001",
@@ -28,4 +29,5 @@ utility scraper using selenium and bs4 in python
 		"permanent_address": "B/614, Panchvati Apartments, Vikaspuri, New Delhi-110018.",
 		"qualification_year": "1988",
 		"s_no": 30
+		
 	}

@@ -1,11 +1,12 @@
-from bs4 import BeautifulSoup
 import requests
-from selenium import webdriver
-from selenium.webdriver.support.ui import Select
-from selenium.webdriver.common.keys import Keys
 import time
 import json
 import sys
+from bs4 import BeautifulSoup
+from selenium import webdriver
+from selenium.webdriver.support.ui import Select
+from selenium.webdriver.common.keys import Keys
+from selenium.common.exceptions import NoSuchElementException
 
 def main():
 
@@ -68,17 +69,25 @@ def main():
 
 	data = []
 
-	for loop in range (0,10):
+	for loop in range (0,5):
 		for i in range (3,33):
 			# Create empty dictionary
 			doctors = {}
 
 			# Get view button's xpath
-			view_button = driver.find_element_by_xpath('/html/body/form/div[3]/div/div/div[5]/div/div/div[1]/div/table/tbody/tr/td[2]/div/div/table[2]/tbody/tr[2]/td/div/table/tbody/tr['+str(i)+']/td[7]/a/span')
+			# add Time fix
+
+			found = False
+			while not found:
+				try:
+					view_button = driver.find_element_by_xpath('/html/body/form/div[3]/div/div/div[5]/div/div/div[1]/div/table/tbody/tr/td[2]/div/div/table[2]/tbody/tr[2]/td/div/table/tbody/tr['+str(i)+']/td[7]/a/span')
+					found = True
+				except NoSuchElementException:
+					time.sleep(2)
 			
 			# Parent handle
 			parent_h = driver.current_window_handle
-			
+
 			# Switch to pop up window
 			view_button.click()
 			
@@ -125,10 +134,23 @@ def main():
 			print doctors
 
 		# Move to next page
+		# also add the time fix
 		if loop == 0:
-			next_button = driver.find_element_by_xpath('/html/body/form/div[3]/div/div/div[5]/div/div/div[1]/div/table/tbody/tr/td[2]/div/div/table[2]/tbody/tr[2]/td/div/table/tbody/tr[33]/td/table/tbody/tr/td[1]/a')
+			found = False
+			while not found:
+				try:
+					next_button = driver.find_element_by_xpath('/html/body/form/div[3]/div/div/div[5]/div/div/div[1]/div/table/tbody/tr/td[2]/div/div/table[2]/tbody/tr[2]/td/div/table/tbody/tr[33]/td/table/tbody/tr/td[1]/a')
+					found = True
+				except NoSuchElementException:
+					time.sleep(2)
 		else:
-			next_button = driver.find_element_by_xpath('/html/body/form/div[3]/div/div/div[5]/div/div/div[1]/div/table/tbody/tr/td[2]/div/div/table[2]/tbody/tr[2]/td/div/table/tbody/tr[33]/td/table/tbody/tr/td[3]/a')			
+			found = False
+			while not found:
+				try:
+					next_button = driver.find_element_by_xpath('/html/body/form/div[3]/div/div/div[5]/div/div/div[1]/div/table/tbody/tr/td[2]/div/div/table[2]/tbody/tr[2]/td/div/table/tbody/tr[33]/td/table/tbody/tr/td[3]/a')			
+					found = True
+				except NoSuchElementException:
+					time.sleep(2)
 		next_button.click()
 		
 		time.sleep(2)

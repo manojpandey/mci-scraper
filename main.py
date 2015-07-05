@@ -64,12 +64,12 @@ def main():
 		----------------------------------------------------------------------------
 		Clicking the view button for particular ID and open the pop up window
 	"""
-
+	print "\t\tSIT BACK AND RELAX..this will take a while\n\n"
 	sys.stdout = open("extra.json", "a")
 
 	data = []
 
-	for loop in range (0,5):
+	for loop in range (0,330):
 		for i in range (3,33):
 			# Create empty dictionary
 			doctors = {}
@@ -160,6 +160,7 @@ def main():
 	myfile.write(json.dumps(data))
 
 	sys.stdout.close()
+	sys.stdout = sys.__stdout__
 
 	# Getting the page source and Parsing it
 

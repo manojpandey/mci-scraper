@@ -124,6 +124,7 @@ def main():
 		else:
 			next_button = driver.find_element_by_xpath('/html/body/form/div[3]/div/div/div[5]/div/div/div[1]/div/table/tbody/tr/td[2]/div/div/table[2]/tbody/tr[2]/td/div/table/tbody/tr[33]/td/table/tbody/tr/td[3]/a')			
 		next_button.click()
+		time.sleep(0.5)
 	# =========================================================================
 
 	myfile = open("data.json", "w")
